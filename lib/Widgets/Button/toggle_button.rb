@@ -12,15 +12,23 @@ module Rugby
         end
         
         def toggled?
-            @o.active?
+            self.active?
         end
 
         def toggle
-            @o.active = true
+            self.active = true
         end
 
         def untoggle
-            @o.active = false
+            self.active = false
+        end
+
+        def active?
+            @o.active
+        end
+
+        def active= a
+            @o.active = a
         end
 
         def on_toggle= block

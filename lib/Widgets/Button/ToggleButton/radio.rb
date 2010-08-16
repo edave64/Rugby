@@ -1,12 +1,14 @@
 module Rugby
-    class Radio < Widget
+    # FIXME:
+    # Radiobuttons are always active
+    class Radio < ToggleButton
         def create_widget
             label = @args[0].kind_of?(String) ? @args[0] : ''
             @o = Gtk::RadioButton.new(label)
         end
 
         def compute_arguments
-            #self.active = @args.include?(:active) ? true : false
+            self.active = @args.include?(:active) ? true : false
         end
 
         def label
@@ -23,14 +25,6 @@ module Rugby
 
         def group= t
             @o.group = t
-        end
-
-        def active
-            @o.active
-        end
-
-        def active= a
-            @o.active = a
         end
     end
 
