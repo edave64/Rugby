@@ -11,10 +11,8 @@ class Widget
         @block = block
         create_widget()
         compute_arguments()
-        Rugby::IDs[@id] = self if @id
         compute_block()
         add_to_root()
-        @o.show_all
     end
 
     def create_widget; end
@@ -44,14 +42,10 @@ class Widget
     end
     
     def compute_arguments
-        if @arghash[:id]
-            @id = @arghash[:id]
-        elsif @args[0].kind_of?(Symbol)
-            @id = @args.shift
-        end
         self.height  = @arghash[:height]  if @arghash.include?(:height)
         self.width   = @arghash[:width]   if @arghash.include?(:width)
         self.tooltip = @arghash[:tooltip] if @arghash.include?(:tooltip)
+        show
     end
     
     def compute_block; end
@@ -66,6 +60,14 @@ class Widget
 
     def click
         @o.signal_emit('clicked')
+    end
+
+    def show
+        @o.show
+    end
+
+    def hide
+        @o.hide
     end
 
     # TODO: on_change, on_blur, on_focus

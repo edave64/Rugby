@@ -6,6 +6,20 @@ module Rugby
 
         def add_to_root; end
 
+        def compute_arguments
+            super
+            if @arghash.include?(:title)
+                self.title = @arghash[:title]
+            elsif @args[0].kind_of?(String)
+                self.title = @args[0]
+            end
+            self.allow_shrink = false if @arghash.include?(:non_shrinkable) || @arghash.include?(:non_resizable)
+            self.allow_grow = false if @arghash.include?(:non_growable) || @arghash.include?(:non_resizable)
+            self.blocking = true if @arghash.include?(:blocking)
+            self.opacity = @arghash[:opacity] if @arghash.include?(:opacity)
+            show_all
+        end
+
         def title; @o.title; end
 
         def title= title
@@ -50,7 +64,11 @@ module Rugby
             @o.unfullscreen
         end
 
-        # don't work!
+        def show_all
+            @o.show_all
+        end
+
+        # FIXME: don't seem work!
         def opacity; @o.opacity; end
 
         def opacity= opacity
@@ -58,15 +76,6 @@ module Rugby
         end
 
         def position; @o.position; end
-
-        def compute_arguments
-            super
-            self.title = @arghash[:title] if @arghash.include?(:title)
-            self.allow_shrink = false if @arghash.include?(:non_shrinkable) || @arghash.include?(:non_resizable)
-            self.allow_grow = false if @arghash.include?(:non_growable) || @arghash.include?(:non_resizable)
-            self.blocking = true if @arghash.include?(:blocking)
-            self.opacity = @arghash[:opacity] if @arghash.include?(:opacity)
-        end
 
         # TODO
         def relative_position!
@@ -78,7 +87,11 @@ module Rugby
 
     module ObjectMethods
         def window *args, &block
-            @o = Window.new *args, &block
+            tmp = @window
+            @window = win = Window.new(*args, &block)
+            p @window
+            @window = tmp
+            return win
         end
     end
 end

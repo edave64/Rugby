@@ -1,16 +1,11 @@
 require 'gtk2'
 
 module Rugby
-    IDs = {}
-
     def self.app *args, &block
         Main.new *args, &block
     end
 
     module ObjectMethods
-        def method_missing id
-            return ::Rugby::IDs[id]
-        end
     end
 end
 
