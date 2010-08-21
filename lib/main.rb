@@ -2,10 +2,12 @@ require 'gtk2'
 
 module Rugby
     def self.app *args, &block
-        Main.new *args, &block
+        $rugby = Main.new *args, &block
     end
 
     module ObjectMethods
+        @root = nil
+        @page_frame = nil
     end
 end
 

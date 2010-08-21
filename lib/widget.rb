@@ -1,17 +1,19 @@
-require 'pp'
 
 class Widget
+    attr_reader :expand, :fill, :padding
     attr_reader :o
 
     def initialize (root, *args, &block)
         @o = nil
+        @expand = true
+        @fill = true
         @root = root
         @args = args
         @arghash = @args[-1].kind_of?(Hash) ? @args.pop : {}
         @block = block
         create_widget()
         compute_arguments()
-        compute_block()
+        compute_block() if @block
         add_to_root()
     end
 
@@ -22,6 +24,7 @@ class Widget
     end
     
     def height= h
+        self.fill = false
         @o.height_request = h
     end
     
@@ -30,7 +33,18 @@ class Widget
     end
     
     def width= w
+        self.expand = false
         @o.width_request = w
+    end
+
+    def fill= f
+        @fill = f
+        @root.repack(self) if @root.kind_of?(::Rugby::Box)
+    end
+
+    def expand= f
+        @expand = f
+        @root.repack(self) if @root.kind_of?(::Rugby::Box)
     end
 
     def tooltip
@@ -42,9 +56,12 @@ class Widget
     end
     
     def compute_arguments
-        self.height  = @arghash[:height]  if @arghash.include?(:height)
-        self.width   = @arghash[:width]   if @arghash.include?(:width)
-        self.tooltip = @arghash[:tooltip] if @arghash.include?(:tooltip)
+        self.fill       = @arghash.include?(:fill) ? @arghash[:fill] : @root ? @root.fill : true
+        self.expand     = @arghash.include?(:expand) ? @arghash[:expand] : @root ? @root.expand : true
+        self.height     = @arghash[:height]     if @arghash.include?(:height)
+        self.width      = @arghash[:width]      if @arghash.include?(:width)
+        self.tooltip    = @arghash[:tooltip]    if @arghash.include?(:tooltip)
+        self.background = @arghash[:background] if @arghash.include?(:background)
         show
     end
     
@@ -68,6 +85,25 @@ class Widget
 
     def hide
         @o.hide
+    end
+
+    def background
+        @o
+    end
+
+    def background= color
+        if color.kind_of?(Gdk::Color)
+            [Gtk::STATE_NORMAL, Gtk::STATE_ACTIVE, Gtk::STATE_PRELIGHT,
+                Gtk::STATE_SELECTED,Gtk::STATE_INSENSITIVE].each do |state|
+                @o.modify_bg(state, color)
+            end
+        else
+            [Gtk::STATE_NORMAL, Gtk::STATE_ACTIVE, Gtk::STATE_PRELIGHT,
+                Gtk::STATE_SELECTED,Gtk::STATE_INSENSITIVE].each do |state|
+                @o.modify_bg(state, Gdk::Color.parse(color))
+            end
+            
+        end
     end
 
     # TODO: on_change, on_blur, on_focus

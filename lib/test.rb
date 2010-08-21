@@ -1,8 +1,9 @@
 require 'main.rb'
 
-Rugby.app :main, :non_resizeable, :title => 'Katze' do
+Rugby.app :non_resizeable, :title => 'Katze' do
     vbox do
-        title 'LOL!!!'
-        para 'Labels should work!'
+        title 'ääää'
+        para 'Labels should ', em('work'), :justify => :right, :width => 800
+        alert('avbgrebg')
     end
 end

@@ -1,5 +1,5 @@
 module Rugby
-    class VBox < Container
+    class VBox < Box
         def create_widget
             @o = Gtk::VBox.new
         end

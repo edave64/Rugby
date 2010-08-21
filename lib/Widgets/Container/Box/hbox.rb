@@ -1,5 +1,5 @@
 module Rugby
-    class HBox < Container
+    class HBox < Box
         def create_widget
             @o = Gtk::HBox.new
         end

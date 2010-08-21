@@ -24,7 +24,13 @@ module Rugby
         }
 
         def create_widget
-            @o = Gtk::MessageDialog.new(@root, Gtk::Dialog::DESTROY_WITH_PARENT,Types[@arghash[:type]],Buttons[@arghash[:buttons]],@arghash[:message])
+            @o = Gtk::MessageDialog.new(
+                @root,
+                Gtk::Dialog::DESTROY_WITH_PARENT,
+                Types[@arghash[:type]],
+                Buttons[@arghash[:buttons]],
+                @arghash[:message]
+            )
         end
 
         def compute_arguments
