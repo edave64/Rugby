@@ -35,7 +35,7 @@ module Rugby
 
         def compute_arguments
             super
-            @o.title = @arghash[:title]
+            @o.title = @arghash[:title] || ($rugby ? $rugby.title : 'Rugby') + ' says:'
             @result = Result[@o.run]
             @o.destroy
         end

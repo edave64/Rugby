@@ -17,6 +17,8 @@ module Rugby
             size = @arghash[:font_size] || 12
             text = @args.join('');
             @o.set_markup("<span font_desc=\"#{size}\">#{text}</span>")
+            @o.wrap = true
+            # TODO: Stop labels from being centered all time
             @o.justify = Justify[@arghash[:justify] || :left]
         end
     end
@@ -31,21 +33,21 @@ module Rugby
 
         # Creates a label with font size 26
         def subtitle *args
-            args.push {} unless args[-1].kind_of?(Hash)
+            args.push({}) unless args[-1].kind_of?(Hash)
             args[-1][:font_size] = 26
             Label.new(@root, *args)
         end
 
         # Creates a label with font size 18
         def tagline *args
-            args.push {} unless args[-1].kind_of?(Hash)
+            args.push({}) unless args[-1].kind_of?(Hash)
             args[-1][:font_size] = 18
             Label.new(@root, *args)
         end
 
         # Creates a label with font size 14
         def caption *args
-            args.push {} unless args[-1].kind_of?(Hash)
+            args.push({}) unless args[-1].kind_of?(Hash)
             args[-1][:font_size] = 14
             Label.new(@root, *args)
         end
@@ -56,7 +58,7 @@ module Rugby
         end
 
         def inscription *args
-            args.push {} unless args[-1].kind_of?(Hash)
+            args.push({}) unless args[-1].kind_of?(Hash)
             args[-1][:font_size] = 10
             Label.new(@root, *args)
         end

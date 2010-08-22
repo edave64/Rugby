@@ -24,7 +24,6 @@ class Widget
     end
     
     def height= h
-        self.fill = false
         @o.height_request = h
     end
     
@@ -33,7 +32,6 @@ class Widget
     end
     
     def width= w
-        self.expand = false
         @o.width_request = w
     end
 
@@ -56,8 +54,9 @@ class Widget
     end
     
     def compute_arguments
-        self.fill       = @arghash.include?(:fill) ? @arghash[:fill] : @root ? @root.fill : true
-        self.expand     = @arghash.include?(:expand) ? @arghash[:expand] : @root ? @root.expand : true
+        self.fill = @arghash.include?(:fill) ? @arghash[:fill] :
+          @arghash.include?(:height) || @arghash.include?(:width) ? false : nil
+        self.expand     = @arghash.include?(:expand) ? @arghash[:expand] : nil
         self.height     = @arghash[:height]     if @arghash.include?(:height)
         self.width      = @arghash[:width]      if @arghash.include?(:width)
         self.tooltip    = @arghash[:tooltip]    if @arghash.include?(:tooltip)

@@ -8,6 +8,10 @@ module Rugby
             @o = Gtk::VPaned.new if @args.include? :handels
             super
         end
+
+        def compute_block
+            super
+        end
     end
 
     module ObjectMethods
