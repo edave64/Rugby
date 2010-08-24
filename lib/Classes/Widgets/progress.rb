@@ -3,6 +3,7 @@ module Rugby
     class Progress < Widget
         def create_widget
             @o = Gtk::ProgressBar.new
+            self.progress = 0
         end
         
         def progress
@@ -30,6 +31,11 @@ module Rugby
     end
 
     module ObjectMethods
+        # creates a progress bar
+        #
+        # arguments:
+        #   * :percent
+        #     displays the percentage
         def progress *args
             Progress.new(@root, *args)
         end

@@ -9,6 +9,10 @@ module Rugby
             self.label = @args[0].kind_of?(String) ? @args[0] : ''
         end
 
+        def compute_block
+            self.on_click = @block if @block
+        end
+
         def label
             @o.label
         end
@@ -20,9 +24,7 @@ module Rugby
 
     module ObjectMethods
         def button label, *args, &block
-            b = Button.new(@root, label, *args)
-            b.on_click = block if block_given?
-            return b
+            Button.new(@root, label, *args, &block)
         end
     end
 end

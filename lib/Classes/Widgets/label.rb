@@ -21,6 +21,18 @@ module Rugby
             # TODO: Stop labels from being centered all time
             @o.justify = Justify[@arghash[:justify] || :left]
         end
+
+        def text
+            @o.label
+        end
+
+        def text= t
+            @o.set_markup t
+        end
+
+        def replace *args
+            @o.set_markup args.join('')
+        end
     end
 
     module ObjectMethods
@@ -57,6 +69,7 @@ module Rugby
             Label.new(@root, *args)
         end
 
+        # Creates a label with font size 10
         def inscription *args
             args.push({}) unless args[-1].kind_of?(Hash)
             args[-1][:font_size] = 10

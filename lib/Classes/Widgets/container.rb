@@ -6,6 +6,14 @@ module Rugby
             @o << obj.o
         end
 
+        def append &block
+            tmp = @root
+            @root = self
+            instance_eval &block
+            @root = tmp
+            @args = nil
+        end
+
         def remove obj
             obj = obj.o if obj.kind_of? Widget
             @o.remove obj

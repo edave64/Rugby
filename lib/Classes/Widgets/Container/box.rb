@@ -18,7 +18,10 @@ module Rugby
 
         def repack obj
             gtk_obj = obj.o
-            @o.set_child_packing(gtk_obj, obj.expand, obj.fill, obj.padding || 2, Gtk::PACK_START)
+            @o.set_child_packing(gtk_obj,
+                obj.expand.kind_of?(NilClass) ? @expand_childs : obj.expand,
+                obj.fill.kind_of?(NilClass) ? @fill_childs : obj.fill,
+                obj.padding || 2, Gtk::PACK_START)
         end
     end
 end
