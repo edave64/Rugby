@@ -8,7 +8,7 @@ require 'rake/testtask'
 
 spec = Gem::Specification.new do |s|
   s.name = 'rugby'
-  s.version = '0.1'
+  s.version = '0.3'
   s.has_rdoc = true
   s.extra_rdoc_files = ['README.markdown', 'LICENSE']
   s.summary = 'Rugby is a Shoes-like GTK wrapper'
